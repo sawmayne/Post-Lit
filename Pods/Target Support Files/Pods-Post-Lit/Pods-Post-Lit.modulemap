@@ -1,0 +1,6 @@
+framework module Pods_Post_Lit {
+  umbrella header "Pods-Post-Lit-umbrella.h"
+
+  export *
+  module * { export * }
+}
