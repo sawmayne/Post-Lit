@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h3J-Lr-xae">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -39,23 +39,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="H7g-L3-7Lg">
-                                <rect key="frame" x="0.0" y="10" width="375" height="667"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7g-L3-7Lg">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="677"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="H7g-L3-7Lg" firstAttribute="height" secondItem="PBV-A0-d2K" secondAttribute="height" id="8gH-Ly-lwg"/>
-                            <constraint firstItem="H7g-L3-7Lg" firstAttribute="centerY" secondItem="Epg-ZK-GST" secondAttribute="centerY" id="NYe-81-e4D"/>
+                            <constraint firstItem="H7g-L3-7Lg" firstAttribute="height" secondItem="PBV-A0-d2K" secondAttribute="height" constant="10" id="8gH-Ly-lwg"/>
+                            <constraint firstItem="H7g-L3-7Lg" firstAttribute="centerY" secondItem="Epg-ZK-GST" secondAttribute="centerY" constant="-5" id="NYe-81-e4D"/>
                             <constraint firstItem="H7g-L3-7Lg" firstAttribute="width" secondItem="PBV-A0-d2K" secondAttribute="width" id="Oy3-ZE-qtp"/>
                             <constraint firstItem="H7g-L3-7Lg" firstAttribute="centerX" secondItem="Epg-ZK-GST" secondAttribute="centerX" id="cdy-iu-rJ4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Epg-ZK-GST"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="H7g-L3-7Lg" id="JLI-DY-9nt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hyw-Lv-plt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="281" y="1"/>
+            <point key="canvasLocation" x="280.80000000000001" y="0.44977511244377816"/>
         </scene>
     </scenes>
 </document>

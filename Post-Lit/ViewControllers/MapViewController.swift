@@ -7,24 +7,65 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
-class MapViewController: UIViewController {
-
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+    
+    @IBOutlet weak var mapView: MKMapView!
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        requestLocationAccess()
+        setupMap()
+        setupLocationSettings()
+//        setLocationOnMap()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setLocationOnMap() {
+        guard let location = locationManager.location else { return }
+        let center = location.coordinate
+        let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+        let region = MKCoordinateRegion(center: center, span: span)
+        mapView.setRegion(region, animated: true)
     }
-    */
-
+    
+    func requestLocationAccess() {
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if authorizationStatus == .denied || authorizationStatus == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    func setupMap() {
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = MKUserTrackingMode.none
+    }
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        guard let location = locationManager.location else { return }
+        let center = location.coordinate
+        let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+        let region = MKCoordinateRegion(center: center, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func setupLocationSettings() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManager.distanceFilter = 50
+        locationManager.startUpdatingLocation()
+    }
+    
+    @IBAction func DropPin(_ sender: Any) {
+        guard let location = locationManager.location else { return }
+        let pin = MKPointAnnotation.init()
+        pin.coordinate = location.coordinate
+        pin.title = "test"
+        
+        
+        mapView.addAnnotation(pin)
+    }
 }
