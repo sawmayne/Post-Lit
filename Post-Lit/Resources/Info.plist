@@ -20,8 +20,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>To record lit stories</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Needs access for posting at your location.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>To enhance video littnes</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
