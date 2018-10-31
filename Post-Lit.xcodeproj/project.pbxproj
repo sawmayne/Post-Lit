@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		90891A9F218A4B55005B4DB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90891A9E218A4B55005B4DB7 /* AppDelegate.swift */; };
-		90891AA1218A4B55005B4DB7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90891AA0218A4B55005B4DB7 /* ViewController.swift */; };
 		90891AA4218A4B55005B4DB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90891AA2218A4B55005B4DB7 /* Main.storyboard */; };
 		90891AA6218A4B57005B4DB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90891AA5218A4B57005B4DB7 /* Assets.xcassets */; };
 		90891AA9218A4B57005B4DB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90891AA7218A4B57005B4DB7 /* LaunchScreen.storyboard */; };
+		90891AB1218A4ED7005B4DB7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90891AB0218A4ED7005B4DB7 /* MapViewController.swift */; };
+		90891AB3218A4EDD005B4DB7 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90891AB2218A4EDD005B4DB7 /* CameraViewController.swift */; };
 		C03920CE09BECFC6B0E076D9 /* Pods_Post_Lit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A482096DB1EED03F36AF0FB6 /* Pods_Post_Lit.framework */; };
 /* End PBXBuildFile section */
 
@@ -19,11 +20,12 @@
 		44DD95B9E38EEA80FDE38797 /* Pods-Post-Lit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Post-Lit.release.xcconfig"; path = "Pods/Target Support Files/Pods-Post-Lit/Pods-Post-Lit.release.xcconfig"; sourceTree = "<group>"; };
 		90891A9B218A4B55005B4DB7 /* Post-Lit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Post-Lit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90891A9E218A4B55005B4DB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		90891AA0218A4B55005B4DB7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		90891AA3218A4B55005B4DB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		90891AA5218A4B57005B4DB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		90891AA8218A4B57005B4DB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		90891AAA218A4B57005B4DB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90891AB0218A4ED7005B4DB7 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		90891AB2218A4EDD005B4DB7 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		A482096DB1EED03F36AF0FB6 /* Pods_Post_Lit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Post_Lit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA89CDF8B211D149D8BE159B /* Pods-Post-Lit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Post-Lit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Post-Lit/Pods-Post-Lit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,8 +72,9 @@
 			isa = PBXGroup;
 			children = (
 				90891A9E218A4B55005B4DB7 /* AppDelegate.swift */,
-				90891AA0218A4B55005B4DB7 /* ViewController.swift */,
 				90891AA2218A4B55005B4DB7 /* Main.storyboard */,
+				90891AB0218A4ED7005B4DB7 /* MapViewController.swift */,
+				90891AB2218A4EDD005B4DB7 /* CameraViewController.swift */,
 				90891AA5218A4B57005B4DB7 /* Assets.xcassets */,
 				90891AA7218A4B57005B4DB7 /* LaunchScreen.storyboard */,
 				90891AAA218A4B57005B4DB7 /* Info.plist */,
@@ -228,7 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90891AA1218A4B55005B4DB7 /* ViewController.swift in Sources */,
+				90891AB3218A4EDD005B4DB7 /* CameraViewController.swift in Sources */,
+				90891AB1218A4ED7005B4DB7 /* MapViewController.swift in Sources */,
 				90891A9F218A4B55005B4DB7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
