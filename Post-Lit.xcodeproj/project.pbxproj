@@ -71,15 +71,55 @@
 		90891A9D218A4B55005B4DB7 /* Post-Lit */ = {
 			isa = PBXGroup;
 			children = (
+				90891AB6218A4F63005B4DB7 /* Models */,
+				90891AB7218A4F70005B4DB7 /* ModelControllers */,
+				90891AB8218A4F77005B4DB7 /* Views */,
+				90891AB5218A4F5A005B4DB7 /* ViewControllers */,
+				90891AB4218A4F52005B4DB7 /* Resources */,
+			);
+			path = "Post-Lit";
+			sourceTree = "<group>";
+		};
+		90891AB4218A4F52005B4DB7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				90891A9E218A4B55005B4DB7 /* AppDelegate.swift */,
-				90891AA2218A4B55005B4DB7 /* Main.storyboard */,
-				90891AB0218A4ED7005B4DB7 /* MapViewController.swift */,
-				90891AB2218A4EDD005B4DB7 /* CameraViewController.swift */,
 				90891AA5218A4B57005B4DB7 /* Assets.xcassets */,
 				90891AA7218A4B57005B4DB7 /* LaunchScreen.storyboard */,
 				90891AAA218A4B57005B4DB7 /* Info.plist */,
 			);
-			path = "Post-Lit";
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		90891AB5218A4F5A005B4DB7 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				90891AB0218A4ED7005B4DB7 /* MapViewController.swift */,
+				90891AB2218A4EDD005B4DB7 /* CameraViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		90891AB6218A4F63005B4DB7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		90891AB7218A4F70005B4DB7 /* ModelControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ModelControllers;
+			sourceTree = "<group>";
+		};
+		90891AB8218A4F77005B4DB7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				90891AA2218A4B55005B4DB7 /* Main.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		C5C56B8C50481ACF50F5D234 /* Pods */ = {
