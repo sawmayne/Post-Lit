@@ -10,22 +10,35 @@ import UIKit
 import AVFoundation
 
 class CameraViewController: UIViewController, AVAudioPlayerDelegate {
+    @IBOutlet weak var cameraView: UIView!
     
     let captureSession = AVCaptureSession()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuth()
+        
+
+    }
+    
+    func doStuff() {
+        CameraController.shared.prepareForSetup { (success) in
+            if success == true {
+                CameraController.shared.displayPreview(on: self.cameraView)
+            }
+            else { print("whack") ; return}
+        }
     }
     
     func requestAuth() {
         switch AVCaptureDevice.authorizationStatus(for: .audio) {
         case .authorized: // The user has previously granted access to the camera.
-            print("Authorized")
+            print("Authorized audio already")
+            
         case .notDetermined: // The user has not yet been asked for camera access.
             AVCaptureDevice.requestAccess(for: .audio) { granted in
                 if granted {
-                    print("Authorized")
+                 print("authorized audio")
                 }
             }
             
@@ -37,11 +50,13 @@ class CameraViewController: UIViewController, AVAudioPlayerDelegate {
         
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized: // The user has previously granted access to the camera.
-            print("Authorized")
+            print("Authorized video already")
+            doStuff()
         case .notDetermined: // The user has not yet been asked for camera access.
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
-                    print("Authorized")
+                    print("Authorized video")
+                     self.doStuff()
                 }
             }
             
@@ -51,9 +66,4 @@ class CameraViewController: UIViewController, AVAudioPlayerDelegate {
             return
         }
     }
-    func doStuff() {
-        
-    }
-    
-    
 }

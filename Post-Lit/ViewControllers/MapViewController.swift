@@ -20,7 +20,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         requestLocationAccess()
         setupMap()
         setupLocationSettings()
-//        setLocationOnMap()
     }
     
     func setLocationOnMap() {
@@ -56,7 +55,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.distanceFilter = 50
-        locationManager.startUpdatingLocation()
     }
     
     @IBAction func DropPin(_ sender: Any) {

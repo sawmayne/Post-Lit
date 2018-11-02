@@ -8,41 +8,49 @@
 
 import UIKit
 import AVFoundation
-
-class CameraController: NSObject {
+// Might need to conform to NSObject
+class CameraController {
+    
+    static let shared = CameraController()
     
     var captureSession: AVCaptureSession?
-    
+
+    // statuses
     var currentCameraPosition: CameraPosition?
-    
+    var flashStatus: flashModes?
+
     // device vars
     var frontCamera: AVCaptureDevice?
     var rearCamera: AVCaptureDevice?
     var microphone: AVCaptureDevice?
-    var flasheMode = AVCaptureDevice.FlashMode.off
-    
+    var flash = AVCaptureDevice.FlashMode.off
+
     // device inputs
     var frontCameraInput: AVCaptureDeviceInput?
     var rearCameraInput: AVCaptureDeviceInput?
     var microphoneInput: AVCaptureDeviceInput?
-    
-    // outPuts
+
+    // outputs
     var videoOutput: AVCaptureMovieFileOutput?
     var previewLayer: AVCaptureVideoPreviewLayer?
     
 }
 
 extension CameraController {
-    func prepateForSetup(completion: @escaping (Error?) -> Void) {
-        func createCaptureSession() {
+    func prepareForSetup(completion: @escaping (Bool) -> Void) {
+        func createCaptureSession(completion: @escaping (Bool) -> Void) {
             self.captureSession = AVCaptureSession()
+            completion(true)
         }
         
         func configureCaptureDevice() {
-            // TODO: - Might have to change this from muxed to audio + video
-            let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera, .builtInMicrophone], mediaType: AVMediaType.muxed, position: .unspecified)
-            let cameras = session.devices.compactMap{ $0 }
-            guard !cameras.isEmpty else { return }
+            
+            let cameraDiscovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera], mediaType: AVMediaType.video, position: .unspecified)
+            let micDiscovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInMicrophone], mediaType: AVMediaType.audio, position: .unspecified)
+            self.microphone = micDiscovery.devices.first
+            
+            let cameras = cameraDiscovery.devices.compactMap{ $0 }
+            guard !cameras.isEmpty else { completion(false) ; return }
             
             for camera in cameras {
                 if camera.position == .front {
@@ -54,11 +62,13 @@ extension CameraController {
             }
         }
         func configureDeviceInputs() {
-            guard let captureSession = self.captureSession else { return }
+            guard let captureSession = self.captureSession else { completion(false) ; return }
+            
+            captureSession.beginConfiguration()
             
             if let rearCamera = self.rearCamera {
                 try? self.rearCameraInput = AVCaptureDeviceInput(device: rearCamera)
-                guard let rearCameraInput = self.rearCameraInput else { return }
+                guard let rearCameraInput = self.rearCameraInput else { completion(false) ; return }
                 if captureSession.canAddInput(rearCameraInput){
                     captureSession.addInput(rearCameraInput)
                 }
@@ -66,7 +76,7 @@ extension CameraController {
             }
             if let frontCamera = self.frontCamera {
                 try? self.frontCameraInput = AVCaptureDeviceInput(device: frontCamera)
-                guard let frontCameraInput = self.frontCameraInput else { return }
+                guard let frontCameraInput = self.frontCameraInput else { completion(false) ; return }
                 if captureSession.canAddInput(frontCameraInput) {
                     captureSession.addInput(frontCameraInput)
                 }
@@ -74,20 +84,20 @@ extension CameraController {
             }
             if let microphone = self.microphone {
                 try? self.microphoneInput = AVCaptureDeviceInput(device: microphone)
-                guard let microphoneInput = self.microphoneInput else { return }
+                guard let microphoneInput = self.microphoneInput else { completion(false) ; return }
                 if captureSession.canAddInput(microphoneInput) {
                     captureSession.addInput(microphoneInput)
                 }
             }
         }
         func configureVideoOutput() {
-            guard let captureSession = self.captureSession else { return }
+            guard let captureSession = self.captureSession else { completion(false) ; return }
             self.videoOutput = AVCaptureMovieFileOutput()
             
-            guard let videoOutput = self.videoOutput else { return }
-            guard let frontCameraInput = self.frontCameraInput else { return }
-            guard let rearCameraInput = self.rearCameraInput else { return }
-            guard let microphoneInput = self.microphoneInput else { return }
+            guard let videoOutput = self.videoOutput else { completion(false) ; return }
+            guard let frontCameraInput = self.frontCameraInput else { completion(false) ; return }
+            guard let rearCameraInput = self.rearCameraInput else { completion(false) ; return }
+            guard let microphoneInput = self.microphoneInput else { completion(false) ; return }
             
             let frontCameraPort = frontCameraInput.ports
             let rearCameraPort = rearCameraInput.ports
@@ -106,12 +116,14 @@ extension CameraController {
             captureSession.addConnection(frontCameraConnection)
             captureSession.addConnection(rearCameraConnection)
             captureSession.addConnection(microphoneConnection)
+            
+            captureSession.commitConfiguration()
+            captureSession.startRunning()
         }
     }
     
     func displayPreview(on view: UIView) {
         guard let captureSession = self.captureSession, captureSession.isRunning else { return }
-        
         self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         self.previewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.previewLayer?.connection?.videoOrientation = .portrait
@@ -120,9 +132,21 @@ extension CameraController {
         self.previewLayer?.frame = view.frame
     }
     
+    func toggleFlash() {
+        guard var flashStatus = flashStatus else { return }
+        switch flashStatus {
+        case .off:
+            flashStatus = .on
+            flash = AVCaptureDevice.FlashMode.on
+        case .on:
+            flashStatus = .off
+            flash = AVCaptureDevice.FlashMode.off
+        }
+    }
     
     func switchCamera() {
         guard var currentCameraPosition = currentCameraPosition, let captureSession = self.captureSession, captureSession.isRunning, let frontCameraInput = frontCameraInput, let rearCameraInput = rearCameraInput else { return }
+        captureSession.beginConfiguration()
         switch currentCameraPosition {
         case .front:
             currentCameraPosition = .rear
@@ -142,5 +166,10 @@ extension CameraController {
     public enum CameraPosition {
         case front
         case rear
+    }
+    
+    public enum flashModes {
+        case off
+        case on
     }
 }
