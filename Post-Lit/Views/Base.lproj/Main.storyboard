@@ -17,35 +17,59 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YHu-kL-lUM">
-                                <rect key="frame" x="124" y="592" width="126" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="RECORD BUTTON"/>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FlashOff" translatesAutoresizingMaskIntoConstraints="NO" id="xYV-Dy-nbZ">
-                                <rect key="frame" x="337.5" y="20" width="37.5" height="37.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="xYV-Dy-nbZ" secondAttribute="height" multiplier="1:1" id="kF1-Nd-1yp"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84Y-vD-qyG">
-                                <rect key="frame" x="16" y="39" width="205" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Switch camera"/>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HB5-Yg-FHT" userLabel="CameraView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="677"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNS-l3-e4N">
+                                        <rect key="frame" x="20" y="50" width="37.5" height="37.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="YNS-l3-e4N" secondAttribute="height" multiplier="1:1" id="5DR-YR-H08"/>
+                                        </constraints>
+                                        <state key="normal" image="SwitchCamera"/>
+                                        <connections>
+                                            <action selector="switchCameraTapped:" destination="p17-Zu-vNv" eventType="touchUpInside" id="9Ko-Yn-x6q"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FN5-tn-yuI">
+                                        <rect key="frame" x="322.5" y="50" width="37.5" height="37.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="FN5-tn-yuI" secondAttribute="height" multiplier="1:1" id="UbM-wg-Ftw"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="FlashOff"/>
+                                        <connections>
+                                            <action selector="toggleFlashTapped:" destination="p17-Zu-vNv" eventType="touchUpInside" id="pQm-5K-oT7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGg-WT-cyB">
+                                        <rect key="frame" x="159.5" y="601" width="56" height="56"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="tGg-WT-cyB" secondAttribute="height" multiplier="1:1" id="gZ6-hU-Zij"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="CameraAway"/>
+                                        <connections>
+                                            <action selector="recordButtonTapped:" destination="p17-Zu-vNv" eventType="touchUpInside" id="gBU-ik-eje"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="tGg-WT-cyB" firstAttribute="centerX" secondItem="HB5-Yg-FHT" secondAttribute="centerX" id="33Y-uc-alE"/>
+                                    <constraint firstItem="tGg-WT-cyB" firstAttribute="width" secondItem="HB5-Yg-FHT" secondAttribute="width" multiplier="0.15" id="3Xt-O0-08F"/>
+                                    <constraint firstItem="YNS-l3-e4N" firstAttribute="width" secondItem="HB5-Yg-FHT" secondAttribute="width" multiplier="0.1" id="5FI-sT-OUO"/>
+                                    <constraint firstAttribute="trailing" secondItem="FN5-tn-yuI" secondAttribute="trailing" constant="15" id="NYT-TJ-375"/>
+                                    <constraint firstItem="YNS-l3-e4N" firstAttribute="leading" secondItem="HB5-Yg-FHT" secondAttribute="leading" constant="20" id="Ozy-fg-9tE"/>
+                                    <constraint firstItem="YNS-l3-e4N" firstAttribute="top" secondItem="HB5-Yg-FHT" secondAttribute="top" constant="50" id="VEe-3v-1Kg"/>
+                                    <constraint firstItem="FN5-tn-yuI" firstAttribute="width" secondItem="HB5-Yg-FHT" secondAttribute="width" multiplier="0.1" id="a4j-AA-FXw"/>
+                                    <constraint firstAttribute="bottom" secondItem="tGg-WT-cyB" secondAttribute="bottom" constant="20" id="pLZ-OT-JKz"/>
+                                    <constraint firstItem="FN5-tn-yuI" firstAttribute="top" secondItem="HB5-Yg-FHT" secondAttribute="top" constant="50" id="rJ7-ja-kFS"/>
+                                </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="LkK-YX-6PS" firstAttribute="trailing" secondItem="xYV-Dy-nbZ" secondAttribute="trailing" id="6Ak-gO-7ZA"/>
                             <constraint firstItem="HB5-Yg-FHT" firstAttribute="centerX" secondItem="LkK-YX-6PS" secondAttribute="centerX" id="8Il-st-nBz"/>
                             <constraint firstItem="HB5-Yg-FHT" firstAttribute="height" secondItem="TVv-FH-JnY" secondAttribute="height" constant="10" id="8he-QL-YEz"/>
-                            <constraint firstItem="xYV-Dy-nbZ" firstAttribute="top" secondItem="LkK-YX-6PS" secondAttribute="top" id="8z3-pG-2pW"/>
                             <constraint firstItem="HB5-Yg-FHT" firstAttribute="width" secondItem="TVv-FH-JnY" secondAttribute="width" id="CbJ-Ub-mva"/>
-                            <constraint firstItem="xYV-Dy-nbZ" firstAttribute="width" secondItem="TVv-FH-JnY" secondAttribute="width" multiplier="0.1" id="blj-wu-F7o"/>
                             <constraint firstItem="HB5-Yg-FHT" firstAttribute="centerY" secondItem="LkK-YX-6PS" secondAttribute="centerY" constant="-5" id="dvp-pE-SLd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LkK-YX-6PS"/>
@@ -89,6 +113,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CameraAway" width="491.51998901367188" height="374.39999389648438"/>
         <image name="FlashOff" width="1600" height="1600"/>
+        <image name="SwitchCamera" width="512" height="512"/>
     </resources>
 </document>
