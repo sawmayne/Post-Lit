@@ -9,6 +9,54 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Show Video View Controller-->
+        <scene sceneID="iZk-kk-NkY">
+            <objects>
+                <viewController id="mDq-xj-PVu" customClass="ShowVideoViewController" customModule="Post_Lit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yA5-E1-7we">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GPd-FI-RST">
+                                <rect key="frame" x="16" y="36" width="37.5" height="37.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="GPd-FI-RST" secondAttribute="height" multiplier="1:1" id="gf5-Lw-89L"/>
+                                </constraints>
+                                <state key="normal" image="XButton"/>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="mDq-xj-PVu" eventType="touchUpInside" id="cm4-on-Cfg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wyj-ow-I3G">
+                                <rect key="frame" x="159.5" y="591" width="56" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="wyj-ow-I3G" secondAttribute="height" multiplier="1:1" id="RFL-1J-Xf0"/>
+                                </constraints>
+                                <state key="normal" image="uploadMap"/>
+                                <connections>
+                                    <action selector="uploadButtonTapped:" destination="mDq-xj-PVu" eventType="touchUpInside" id="OF6-Ns-rZ0"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="GPd-FI-RST" firstAttribute="leading" secondItem="nBp-hO-AHb" secondAttribute="leading" constant="16" id="6cU-rp-199"/>
+                            <constraint firstItem="wyj-ow-I3G" firstAttribute="width" secondItem="yA5-E1-7we" secondAttribute="width" multiplier="0.15" id="Dah-Ic-iyj"/>
+                            <constraint firstItem="GPd-FI-RST" firstAttribute="top" secondItem="nBp-hO-AHb" secondAttribute="top" constant="16" id="R6l-Db-RxR"/>
+                            <constraint firstItem="GPd-FI-RST" firstAttribute="width" secondItem="yA5-E1-7we" secondAttribute="width" multiplier="0.1" id="WXX-90-LS3"/>
+                            <constraint firstItem="wyj-ow-I3G" firstAttribute="centerX" secondItem="nBp-hO-AHb" secondAttribute="centerX" id="XCP-yR-uPK"/>
+                            <constraint firstItem="nBp-hO-AHb" firstAttribute="bottom" secondItem="wyj-ow-I3G" secondAttribute="bottom" constant="20" id="icj-63-GY8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nBp-hO-AHb"/>
+                    </view>
+                    <connections>
+                        <outlet property="videoView" destination="yA5-E1-7we" id="6SN-Ty-bHy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JGH-Z2-yJ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-630" y="-704"/>
+        </scene>
         <!--Camera View Controller-->
         <scene sceneID="t8M-dI-fmZ">
             <objects>
@@ -76,11 +124,12 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="HB5-Yg-FHT" id="Gvf-GS-GWG"/>
+                        <segue destination="mDq-xj-PVu" kind="show" identifier="showVideo" id="rpe-Ny-Wa8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wpv-YM-OWE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-666.39999999999998" y="1.3493253373313345"/>
+            <point key="canvasLocation" x="-1468" y="68"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="2te-4x-h5C">
@@ -116,5 +165,7 @@
         <image name="CameraAway" width="491.51998901367188" height="374.39999389648438"/>
         <image name="FlashOff" width="1600" height="1600"/>
         <image name="SwitchCamera" width="512" height="512"/>
+        <image name="XButton" width="512" height="512"/>
+        <image name="uploadMap" width="512" height="512"/>
     </resources>
 </document>

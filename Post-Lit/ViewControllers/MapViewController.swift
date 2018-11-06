@@ -57,13 +57,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.distanceFilter = 50
     }
     
-    @IBAction func DropPin(_ sender: Any) {
+    func dropPin() {
         guard let location = locationManager.location else { return }
+        
         let pin = MKPointAnnotation.init()
         pin.coordinate = location.coordinate
         pin.title = "test"
         
-        
         mapView.addAnnotation(pin)
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseID = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            pinView?.animatesDrop = true
+            pinView?.image = UIImage(named: "LIT")
+        }
+        else {
+            pinView?.annotation = annotation
+        }
+        return pinView
     }
 }

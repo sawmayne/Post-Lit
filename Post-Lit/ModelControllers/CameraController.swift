@@ -150,7 +150,11 @@ extension CameraController {
     }
     
     func switchCamera() {
-        guard var currentCameraPosition = currentCameraPosition, let captureSession = self.captureSession, captureSession.isRunning, let frontCameraInput = frontCameraInput, let rearCameraInput = rearCameraInput else { return }
+        guard var currentCameraPosition = currentCameraPosition,
+            let captureSession = self.captureSession,
+            captureSession.isRunning,
+            let frontCameraInput = frontCameraInput,
+            let rearCameraInput = rearCameraInput else { return }
         captureSession.beginConfiguration()
         switch currentCameraPosition {
         case .front:

@@ -11,18 +11,21 @@ import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        let urlConfig = URLSessionConfiguration()
-        let session = URLSession(configuration: urlConfig)
-        session.dataTask(with: outputFileURL) { (data, response, error) in
-            if let error = error {
-                print("could not retrieve data or something \(error.localizedDescription)")
-            }
-            if data == nil {
-                print("whack")
-            } else {                
-            }
-            // do stuff with response maybe idk
+        
+        if let error = error {
+            print("whack couldnt finish recording \(error.localizedDescription)")
+        } else {
+            
+            let videoRecorded = outputURL! as URL
+            
+            performSegue(withIdentifier: "showVideo", sender: videoRecorded)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let vc = segue.destination as! ShowVideoViewController
+        vc.videoURL = sender as? URL
     }
     
     @IBAction func switchCameraTapped(_ sender: Any) {
@@ -51,10 +54,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         requestAuth()
         // Do any additional setup after loading the view, typically from a nib.
         if setupSession() == true {
-        setupPreview()
-        startSession()
+            setupPreview()
+            startSession()
+        }
     }
-}
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -168,19 +171,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
     }
     
-    //EDIT 1: I FORGOT THIS AT FIRST
-    
     func tempURL() -> URL? {
+        
         let directory = NSTemporaryDirectory() as NSString
         
         if directory != "" {
             let path = directory.appendingPathComponent(NSUUID().uuidString + ".mp4")
             return URL(fileURLWithPath: path)
         }
-        
         return nil
     }
-    
     
     func startRecording() {
         
@@ -207,7 +207,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 
             }
             
-            //EDIT2: And I forgot this
             outputURL = tempURL()
             movieOutput.startRecording(to: outputURL, recordingDelegate: self)
             
