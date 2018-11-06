@@ -12,6 +12,11 @@ import AVFoundation
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
+        if captureSession.isRunning {
+            captureSession.stopRunning()
+            previewLayer = nil
+        }
+        
         if let error = error {
             print("whack couldnt finish recording \(error.localizedDescription)")
         } else {
@@ -52,11 +57,17 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuth()
+        
         // Do any additional setup after loading the view, typically from a nib.
         if setupSession() == true {
             setupPreview()
             startSession()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -65,12 +76,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     func setupPreview() {
         // Configure previewLayer
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.frame = cameraView.bounds
-        previewLayer.videoGravity = .resizeAspectFill
-        self.view.layer.addSublayer(previewLayer)
-        self.view.bringSubviewToFront(cameraView)
-    }
+            previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            previewLayer.frame = cameraView.bounds
+            previewLayer.videoGravity = .resizeAspectFill
+            self.view.layer.addSublayer(previewLayer)
+            self.view.bringSubviewToFront(cameraView)
+        }
     
     //MARK:- Setup Camera
     
@@ -122,15 +133,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     //MARK:- Camera Session
     func startSession() {
-        
         if !captureSession.isRunning {
             videoQueue().async {
                 self.captureSession.startRunning()
-                //
             }
         }
         else {
-            self.captureSession.stopRunning()
+            stopSession()
         }
     }
     

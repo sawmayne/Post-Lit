@@ -19,7 +19,6 @@ class CameraController {
     var currentCameraPosition: CameraPosition?
     var flashStatus: flashModes?    
 
-
     // device vars
     var frontCamera: AVCaptureDevice?
     var rearCamera: AVCaptureDevice?

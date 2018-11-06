@@ -10,8 +10,7 @@ import UIKit
 import AVFoundation
 
 class ShowVideoViewController: UIViewController {
-
-
+    
     let avPlayer = AVPlayer()
     var avPlayerLayer: AVPlayerLayer!
     
@@ -36,7 +35,7 @@ class ShowVideoViewController: UIViewController {
     }
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
-    present(CameraViewController(), animated: true, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
     @IBAction func uploadButtonTapped(_ sender: Any) {
@@ -44,13 +43,12 @@ class ShowVideoViewController: UIViewController {
     }
 }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+/*
+ // MARK: - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+ // Get the new view controller using segue.destination.
+ // Pass the selected object to the new view controller.
+ }
+ */
