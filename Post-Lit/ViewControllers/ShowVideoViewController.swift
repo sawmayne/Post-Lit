@@ -8,18 +8,28 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
+import FirebaseStorage
+import FirebaseFirestore
 
-class ShowVideoViewController: UIViewController {
+class ShowVideoViewController: UIViewController, CLLocationManagerDelegate {
     
     let avPlayer = AVPlayer()
     var avPlayerLayer: AVPlayerLayer!
+    let locationManager = CLLocationManager()
     
     var videoURL: URL!
     //connect this to your uiview in storyboard
     @IBOutlet weak var videoView: UIView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if authorizationStatus == .denied || authorizationStatus == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
         
         avPlayerLayer = AVPlayerLayer(player: avPlayer)
         avPlayerLayer.frame = view.bounds
@@ -35,20 +45,37 @@ class ShowVideoViewController: UIViewController {
     }
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
-        self.dismiss(animated: false, completion: nil)
+        
+       dismiss(animated: true, completion: nil)
+        
     }
     
     @IBAction func uploadButtonTapped(_ sender: Any) {
+        let test = CLLocationManager.authorizationStatus()
+        if test == .authorizedWhenInUse {
+            MapViewController.shared.setupLocationSettings()
+//            locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+//            locationManager.distanceFilter = 50
+            guard let currentLocation = locationManager.location else { return }
+            
+            let videoAsData = try? Data(contentsOf: videoURL)
+            
+            MapViewController.shared.dropPin(location: MapViewController.shared.locationManager.location ?? currentLocation)
+            
+            performSegue(withIdentifier: "toMapVC", sender: self)
+            
+        }
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination == MapViewController() {
+            
+        }
         
     }
+    // Get the new view controller using segue.destination.
+    // Pass the selected object to the new view controller.
 }
-
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destination.
- // Pass the selected object to the new view controller.
- }
- */

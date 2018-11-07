@@ -12,6 +12,8 @@ import CoreLocation
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    static let shared = MapViewController() 
+    
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
     
@@ -52,18 +54,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func setupLocationSettings() {
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.distanceFilter = 50
+        
     }
     
-    func dropPin() {
-        guard let location = locationManager.location else { return }
+    func dropPin(location: CLLocation) {
+        
+        var location = location
+        guard let locationManagersLocation = locationManager.location else { return }
+        location = locationManagersLocation
         
         let pin = MKPointAnnotation.init()
         pin.coordinate = location.coordinate
-        pin.title = "test"
-        
+      
         mapView.addAnnotation(pin)
     }
     
@@ -74,8 +80,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
             pinView?.animatesDrop = true
             pinView?.image = UIImage(named: "LIT")
-        }
-        else {
+        } else {
             pinView?.annotation = annotation
         }
         return pinView

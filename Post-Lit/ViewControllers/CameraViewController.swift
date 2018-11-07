@@ -10,12 +10,9 @@ import UIKit
 import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+    static let shared = CameraViewController()
+    
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        
-        if captureSession.isRunning {
-            captureSession.stopRunning()
-            previewLayer = nil
-        }
         
         if let error = error {
             print("whack couldnt finish recording \(error.localizedDescription)")
@@ -54,22 +51,32 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var activeInput: AVCaptureDeviceInput!
     var outputURL: URL!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         requestAuth()
         
         // Do any additional setup after loading the view, typically from a nib.
         if setupSession() == true {
             setupPreview()
             startSession()
+        } else {
+            captureSession.stopRunning()
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        requestAuth()
+//
+//        // Do any additional setup after loading the view, typically from a nib.
+//        if setupSession() == true {
+//            setupPreview()
+//            startSession()
+//        } else {
+//            captureSession.stopRunning()
+//        }
+//    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -147,6 +154,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if captureSession.isRunning {
             videoQueue().async {
                 self.captureSession.stopRunning()
+                self.previewLayer.removeFromSuperlayer()
+                self.previewLayer = AVCaptureVideoPreviewLayer()
+                
+                if self.setupSession() == true {
+                    self.setupPreview()
+                    self.startSession()
+                }
+                
             }
         }
     }
@@ -154,8 +169,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func videoQueue() -> DispatchQueue {
         return DispatchQueue.main
     }
-    
-    
     
     func currentVideoOrientation() -> AVCaptureVideoOrientation {
         var orientation: AVCaptureVideoOrientation

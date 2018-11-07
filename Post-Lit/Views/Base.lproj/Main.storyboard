@@ -51,11 +51,12 @@
                     </view>
                     <connections>
                         <outlet property="videoView" destination="yA5-E1-7we" id="6SN-Ty-bHy"/>
+                        <segue destination="h3J-Lr-xae" kind="show" identifier="toMapVC" id="crR-KR-vtq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JGH-Z2-yJ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-630" y="-704"/>
+            <point key="canvasLocation" x="-711" y="-770"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="t8M-dI-fmZ">
@@ -124,7 +125,7 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="HB5-Yg-FHT" id="Gvf-GS-GWG"/>
-                        <segue destination="mDq-xj-PVu" kind="presentation" identifier="showVideo" animates="NO" id="rpe-Ny-Wa8"/>
+                        <segue destination="mDq-xj-PVu" kind="show" identifier="showVideo" animates="NO" id="rpe-Ny-Wa8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wpv-YM-OWE" userLabel="First Responder" sceneMemberID="firstResponder"/>
