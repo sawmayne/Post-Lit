@@ -10,7 +10,20 @@ import UIKit
 import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+    @IBOutlet weak var cameraView: UIView!
+    
     static let shared = CameraViewController()
+    
+    let captureSession = AVCaptureSession()
+    let movieOutput = AVCaptureMovieFileOutput()
+    var currentCameraDirection: AVCaptureDevice.Position?
+    
+    var previewLayer: AVCaptureVideoPreviewLayer!
+    var activeInput: AVCaptureDeviceInput!
+    var outputURL: URL!
+    
+    var captureDevice : AVCaptureDevice?
+    
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
@@ -31,7 +44,29 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     @IBAction func switchCameraTapped(_ sender: Any) {
-        CameraController.shared.switchCamera()
+        
+        var Currentdevice = activeInput.device
+        captureSession.beginConfiguration()
+        
+        guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return }
+        guard let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else { return }
+        
+        guard let inputToRemove = try? AVCaptureDeviceInput(device: Currentdevice) else { return }
+        guard let inputToAdd = try? AVCaptureDeviceInput(device: Currentdevice) else { return }
+        
+        if Currentdevice == backCamera {
+            captureSession.removeInput(inputToRemove)
+            Currentdevice = frontCamera
+            captureSession.addInput(inputToAdd)
+        }
+        else {
+            if Currentdevice == frontCamera {
+                captureSession.removeInput(inputToRemove)
+                Currentdevice = frontCamera
+                captureSession.addInput(inputToAdd)
+            }
+        }
+        captureSession.commitConfiguration()
     }
     
     @IBAction func toggleFlashTapped(_ sender: Any) {
@@ -42,19 +77,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         startRecording()
     }
     
-    @IBOutlet weak var cameraView: UIView!
-    
-    let captureSession = AVCaptureSession()
-    let movieOutput = AVCaptureMovieFileOutput()
-    
-    var previewLayer: AVCaptureVideoPreviewLayer!
-    var activeInput: AVCaptureDeviceInput!
-    var outputURL: URL!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuth()
-
+        
         // Do any additional setup after loading the view, typically from a nib.
         if setupSession() == true {
             setupPreview()
@@ -63,19 +89,19 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             captureSession.stopRunning()
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     func setupPreview() {
         // Configure previewLayer
-            previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            previewLayer.frame = cameraView.bounds
-            previewLayer.videoGravity = .resizeAspectFill
-            self.view.layer.addSublayer(previewLayer)
-            self.view.bringSubviewToFront(cameraView)
-        }
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.frame = cameraView.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        self.view.layer.addSublayer(previewLayer)
+        self.view.bringSubviewToFront(cameraView)
+    }
     
     //MARK:- Setup Camera
     
@@ -83,7 +109,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         captureSession.sessionPreset = AVCaptureSession.Preset.high
         
         // Setup Camera
-        let camera = AVCaptureDevice.default(for: .video)
+        let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        self.captureDevice = camera
         
         do {
             guard let camera = camera else { return false }
@@ -164,11 +191,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         case .portrait:
             orientation = AVCaptureVideoOrientation.portrait
         case .landscapeRight:
-            orientation = AVCaptureVideoOrientation.landscapeLeft
+            orientation = AVCaptureVideoOrientation.landscapeRight
         case .portraitUpsideDown:
             orientation = AVCaptureVideoOrientation.portraitUpsideDown
         default:
-            orientation = AVCaptureVideoOrientation.landscapeRight
+            orientation = AVCaptureVideoOrientation.landscapeLeft
         }
         
         return orientation

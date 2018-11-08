@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import FirebaseFirestore
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
