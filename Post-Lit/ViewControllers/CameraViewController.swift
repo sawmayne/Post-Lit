@@ -51,10 +51,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var activeInput: AVCaptureDeviceInput!
     var outputURL: URL!
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         requestAuth()
-        
+
         // Do any additional setup after loading the view, typically from a nib.
         if setupSession() == true {
             setupPreview()
@@ -63,19 +63,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             captureSession.stopRunning()
         }
     }
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        requestAuth()
-//
-//        // Do any additional setup after loading the view, typically from a nib.
-//        if setupSession() == true {
-//            setupPreview()
-//            startSession()
-//        } else {
-//            captureSession.stopRunning()
-//        }
-//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

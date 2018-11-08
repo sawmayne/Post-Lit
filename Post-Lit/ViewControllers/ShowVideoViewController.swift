@@ -17,11 +17,9 @@ class ShowVideoViewController: UIViewController, CLLocationManagerDelegate {
     let avPlayer = AVPlayer()
     var avPlayerLayer: AVPlayerLayer!
     let locationManager = CLLocationManager()
-    
     var videoURL: URL!
     //connect this to your uiview in storyboard
     @IBOutlet weak var videoView: UIView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,36 +44,25 @@ class ShowVideoViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
         
-       dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
         
     }
     
     @IBAction func uploadButtonTapped(_ sender: Any) {
-        let test = CLLocationManager.authorizationStatus()
-        if test == .authorizedWhenInUse {
-            MapViewController.shared.setupLocationSettings()
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-//            locationManager.distanceFilter = 50
-            guard let currentLocation = locationManager.location else { return }
-            
-            let videoAsData = try? Data(contentsOf: videoURL)
-            
-            MapViewController.shared.dropPin(location: MapViewController.shared.locationManager.location ?? currentLocation)
-            
-            performSegue(withIdentifier: "toMapVC", sender: self)
-            
-        }
+        
+        performSegue(withIdentifier: "toMapVC", sender: self)
+        
     }
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.destination == MapViewController() {
+            let videoAsData = try? Data(contentsOf: videoURL)
             
+            MapViewController.shared.landingPad = true
         }
         
     }
-    // Get the new view controller using segue.destination.
-    // Pass the selected object to the new view controller.
 }

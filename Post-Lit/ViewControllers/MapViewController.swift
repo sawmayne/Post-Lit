@@ -17,11 +17,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
     
+    var landingPad: Bool?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         requestLocationAccess()
         setupMap()
         setupLocationSettings()
+        setLocationOnMap()
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if landingPad == true {
+            print("success")
+            dropPin(location: locationManager.location!)
+        }
     }
     
     func setLocationOnMap() {
@@ -29,7 +41,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let center = location.coordinate
         let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
         let region = MKCoordinateRegion(center: center, span: span)
-        mapView.setRegion(region, animated: true)
+        mapView.setRegion(region, animated: false)
     }
     
     func requestLocationAccess() {
@@ -45,13 +57,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.userTrackingMode = MKUserTrackingMode.none
     }
     
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        guard let location = locationManager.location else { return }
-        let center = location.coordinate
-        let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-        let region = MKCoordinateRegion(center: center, span: span)
-        mapView.setRegion(region, animated: true)
-    }
+//    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+//        guard let location = locationManager.location else { return }
+//        let center = location.coordinate
+//        let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+//        let region = MKCoordinateRegion(center: center, span: span)
+//        mapView.setRegion(region, animated: true)
+//    }
     
     func setupLocationSettings() {
         
@@ -69,20 +81,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let pin = MKPointAnnotation.init()
         pin.coordinate = location.coordinate
-      
+        print("dropped pin")
+        
         mapView.addAnnotation(pin)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let reuseID = "pin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
-            pinView?.animatesDrop = true
-            pinView?.image = UIImage(named: "LIT")
-        } else {
-            pinView?.annotation = annotation
-        }
+        let pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        let image = #imageLiteral(resourceName: "LIT")
+        let size = CGSize(width: 50, height: 50)
+        UIGraphicsBeginImageContext(size)
+        image.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        pinView.image = resizedImage
         return pinView
     }
 }
